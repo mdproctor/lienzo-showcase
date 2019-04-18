@@ -1,11 +1,15 @@
 package org.roger600.lienzo.client;
 
 import com.ait.lienzo.client.core.shape.Layer;
+import com.ait.lienzo.client.core.shape.MultiPath;
+import com.ait.lienzo.client.widget.LienzoPanel2;
 import com.google.gwt.core.client.EntryPoint;
 import elemental2.dom.DomGlobal;
+import elemental2.dom.Element;
 import elemental2.dom.Event;
 import elemental2.dom.EventListener;
 import elemental2.dom.HTMLButtonElement;
+import elemental2.dom.HTMLDivElement;
 import elemental2.dom.MouseEvent;
 
 import static elemental2.dom.DomGlobal.document;
@@ -87,8 +91,20 @@ public class LienzoTests2 implements EntryPoint {
         btn.textContent = "I am a button";
         btn.addEventListener("click", evt -> {
             if(evt instanceof MouseEvent) {
+
+                HTMLDivElement elm    = (HTMLDivElement) document.getElementById("demo");
+
                 MouseEvent mouseEvent = (MouseEvent) evt;
-                DomGlobal.alert("Clicked " + mouseEvent.clientX + " " + mouseEvent.clientY);
+                DomGlobal.alert("Clicked " + mouseEvent.clientX + " " + mouseEvent.clientY + " " + elm);
+
+                LienzoPanel2   lienzo = new LienzoPanel2(elm);
+
+                //lienzo.add()
+                Layer l1 = new Layer();
+                lienzo.add(l1);
+                l1.add(new MultiPath().rect(100, 100, 100, 100)
+                                      .setStrokeColor( "#FFFFFF" ).setFillColor( "#CC0000" ).setDraggable(true) );
+                l1.draw();
 
             }
         });
